@@ -12,7 +12,15 @@ app.use(express.json());
 const users: { name: string }[] = [];
 
 app.post('/user', (req: Request, res: Response) => {
-    res.status(200).send();
+    const { name } = req.body; // Extract name from the request body
+    // Validate that a name was provided
+    if (!name) {
+        return res.status(400).json({ error: 'Name is required' });
+    }
+    // Add the new user to the users array
+    users.push({ name });
+
+    res.status(201).json({ message: 'User added successfully', user: { name } });
 });
 
 app.get('/users', (req: Request, res: Response) => {
