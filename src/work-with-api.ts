@@ -1,18 +1,27 @@
-// Write a function that makes a GET request to the JSONPlaceholder API and 
-// returns posts that are longer than 100 characters.
+// Create an API using Node.js and Express:
+// 1. POST /user - adds a user.
+// 2. GET /users - returns all users.
 
-// API URL: https://jsonplaceholder.typicode.com/posts
-// Use axios library
-type APIResponseType = {
-    id: number,
-    userId: number
-    title: string,
-    body: string,
+// Use Express library
+
+import express, { Request, Response } from 'express';
+const app = express();
+
+app.use(express.json());
+
+const users: { name: string }[] = [];
+
+app.post('/user', (req: Request, res: Response) => {
+    res.status(200).send();
+});
+
+app.get('/users', (req: Request, res: Response) => {
+    res.status(200).json(users);
+});
+
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = 3000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-async function fetchLongPosts(): Promise<APIResponseType[]> {
-    // Your code goes here
-    return []
-}
-
-module.exports = { fetchLongPosts }
+export default app;
